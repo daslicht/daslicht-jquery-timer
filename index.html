@@ -1,0 +1,160 @@
+<script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+<style>
+.progress {
+    width:0px;
+    height:20px;
+    display:block;
+    background-color:#d1d1d1;
+    transition: all 0.5s ease;
+}
+
+.startTimer{
+    width:25px;
+    height:25px;
+}
+
+.startTimer,.pauseTimer,.pauseTimer:before,
+.startTimer::before {
+    display: inline-block
+}
+ 
+.startTimer:hover::before , .pauseTimer:hover::before {
+	background: red;
+	transition: all 0.1s ease;
+}
+
+.startTimer:before {
+    background: #333;
+    content: "";
+    height: 1em;
+    /* margin-right: 0.5em; */
+    vertical-align: text-top;
+    width: 1em;
+        -webkit-mask:     
+    url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAr0lEQVQ4T6WT2w3CMBAEdzojHUEHSQehA+iAEkgHdADpACowWsmOEBhsh/uxdNKO77GHJIUQLpKuknbAzbnaIALCi6CXtAfuNZAcwDqLt8CxBPkGSLqzpAHwm40SIIkOEfQxn1pAamt8n08LIFXjKrytkxNrAMt8gO4fwARs1gDmuOLmFh6SRsBGW6K2Ahuqz9m8BJiisNlI7tM/2kA/I1fBEHttOiafsw3iA2o65yeQzV8RHufZPQAAAABJRU5ErkJggg==) no-repeat;
+        -webkit-mask-size: 100%
+}
+
+.pauseTimer:before {
+    
+    background: #333;
+    content: "";
+    height: 1em;
+    /* margin-right: 0.5em; */
+    vertical-align: text-top;
+    width: 1em;
+    -webkit-mask: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAOUlEQVQ4T2NkgIL///83MDAw1MP4jIyMjDA2iP7///9/JH4jIyMjSD0DXNGoAeBAGg3E0TAYwukAAPhDkBG/J2yQAAAAAElFTkSuQmCC) no-repeat;
+    -webkit-mask-size: 100%;
+    
+}
+
+                     
+</style>
+<div class="gmPhantom_LightboxWindow">
+   
+</div>
+<script>
+$(document).ready(function() {
+    
+    
+    function Countdown() 
+    {
+        var self = this;
+        var isRunning = false;
+        var button; //toggle play / stop
+        var progressBar;
+        var i = 4; //iterations
+        var timer;
+        var progressBarWidth =0;
+
+        function addTimer() {
+            var timer = 
+	            '<div class="daslicht_slideshow_controls_container" > '+
+	            '<div class="progress"></div>'+
+	 			'<a href="#" class="toggleSlideshow startTimer"></a>'+
+	            '</div>';
+            $(".gmPhantom_LightboxWindow").html(timer);
+            button = $('.toggleSlideshow');
+            progressBar = $('.progress');
+        }
+        
+        function count() {
+        	i--;
+            progressBar.html(i);
+            //var currentWidth = progressBar.css("width");
+            progressBarWidth += 25;
+            console.log(progressBarWidth);
+            if(progressBarWidth == 100 ){
+            	progressBarWidth = 0;
+            }
+            progressBar.css( "width", progressBarWidth + "px")
+
+            if(i>0) {
+                timer = window.setTimeout( count, 1000 );
+            }else{
+                console.log("next slide");
+                i=4;
+                timer = window.setTimeout( count, 1000 );
+            }
+	        
+    	}
+
+ 		function stopTimer() {
+        	 console.log('stop');
+        	 clearTimeout(timer);
+        	 i = 4;
+        };
+           
+        function startTimer() {
+        	console.log('start');
+			count();
+        };
+
+
+        this.togglePlayback = function() {
+        	 console.log('toggle', button);
+
+        	 if(isRunning) {
+        	 	stopTimer();
+        	 	isRunning = false;
+        	 	button.removeClass('pauseTimer');
+            	button.addClass('startTimer');
+        	 }else{ 
+        	 	startTimer();
+        	 	isRunning = true;
+        	 	button.removeClass('startTimer');
+            	button.addClass('pauseTimer');
+        	 }
+        };
+      
+
+      	/**
+      	 * Constructor
+      	 */
+        (
+          function (toggleButton) 
+          {
+            addTimer();
+          }
+        )();
+    }
+       
+ 
+
+    //addTimer();
+    var c = new Countdown();
+    
+   
+    $(document).on("click", ".toggleSlideshow", function(){
+    	c.togglePlayback();
+    });
+    
+
+});
+   
+</script>
+
+
+
+
+  
