@@ -1,11 +1,18 @@
 <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
 <style>
+body{
+    background-color:black;
+}
 .progress {
-    width:0px;
-    height:20px;
-    display:block;
-    background-color:#d1d1d1;
+    width: 0px;
+    height: 4px;
+    display: block;
+    background-color: rgba(209, 209, 209, 0.33);
     transition: all 0.5s ease;
+    margin-left: 20px;
+    position: absolute;
+    margin-top: 6px;
+}
 }
 
 .startTimer{
@@ -19,12 +26,12 @@
 }
  
 .startTimer:hover::before , .pauseTimer:hover::before {
-	background: red;
+	background: #F8FFC9;
 	transition: all 0.1s ease;
 }
 
 .startTimer:before {
-    background: #333;
+    background: #ffffff;
     content: "";
     height: 1em;
     /* margin-right: 0.5em; */
@@ -37,7 +44,7 @@
 
 .pauseTimer:before {
     
-    background: #333;
+    background: #ffffff;
     content: "";
     height: 1em;
     /* margin-right: 0.5em; */
@@ -71,7 +78,7 @@ $(document).ready(function() {
             var timer = 
 	            '<div class="daslicht_slideshow_controls_container" > '+
 	            '<div class="progress"></div>'+
-	 			'<a href="#" class="toggleSlideshow startTimer"></a>'+
+	 			'<a href="#" title="test" class="toggleSlideshow startTimer"></a>'+
 	            '</div>';
             $(".gmPhantom_LightboxWindow").html(timer);
             button = $('.toggleSlideshow');
@@ -83,7 +90,7 @@ $(document).ready(function() {
 
         function check() {
             i--;
-            progressBar.html(i);
+           // progressBar.html(i);
             progressBarWidth += 25;
             if(progressBarWidth == 100 ){
                 progressBarWidth = 0;
