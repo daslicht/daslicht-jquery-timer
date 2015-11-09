@@ -78,49 +78,36 @@ $(document).ready(function() {
             progressBar = $('.progress');
         }
         
-        function count() {
-        	i--;
+
+
+
+        function check() {
+            i--;
             progressBar.html(i);
-            //var currentWidth = progressBar.css("width");
             progressBarWidth += 25;
-            console.log(progressBarWidth);
             if(progressBarWidth == 100 ){
-            	progressBarWidth = 0;
+                progressBarWidth = 0;
             }
-            progressBar.css( "width", progressBarWidth + "px")
-
-            if(i>0) {
-                timer = window.setTimeout( count, 1000 );
-            }else{
-                console.log("next slide");
-                i=4;
-                timer = window.setTimeout( count, 1000 );
+            progressBar.css( "width", progressBarWidth + "px");
+            
+            if (i==0) {
+                 console.log("next slide");
+                 i=4
             }
-	        
-    	}
-
- 		function stopTimer() {
-        	 console.log('stop');
-        	 clearTimeout(timer);
-        	 i = 4;
-        };
-           
-        function startTimer() {
-        	console.log('start');
-			count();
-        };
+        }
 
 
         this.togglePlayback = function() {
-        	 console.log('toggle', button);
 
         	 if(isRunning) {
-        	 	stopTimer();
-        	 	isRunning = false;
+                clearInterval(timer);
+                isRunning = false;
         	 	button.removeClass('pauseTimer');
             	button.addClass('startTimer');
+                progressBarWidth.css("width","0");
+
         	 }else{ 
-        	 	startTimer();
+                timer = setInterval(check,1000);
         	 	isRunning = true;
         	 	button.removeClass('startTimer');
             	button.addClass('pauseTimer');
